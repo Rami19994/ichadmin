@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>iCHANCE — بوابة المالك المستقلة وتوليد مفاتيح الإدارة</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="description" content="لوحة توليد مفاتيح الإدارة والتحكم السري لمالك منصة iCHANCE">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="shell">
+  <!-- رأس الصفحة -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-mark">iC</div>
+      <div class="brand-text">
+        <span class="brand-name">iCHANCE MASTER GATE</span>
+        <span class="brand-sub">بوابة المالك المستقلة — إدارة المفاتيح</span>
+      </div>
+    </div>
+    <div class="top-status">
+      <span class="status-indicator status--checking" id="serverStatusDot"></span>
+      <span class="status-label" id="serverStatusText">جارٍ التحقق من الخادم...</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 1. بطاقة إعدادات الخادم الهدف -->
+    <section class="card target-server-card">
+      <div class="card-head">
+        <div class="card-icon">🌐</div>
+        <div>
+          <h3>الخادم المستهدف (Target Casino Server)</h3>
+          <p class="card-sub">رابط موقع الألعاب الذي يتم توليد المفاتيح والتحكم به</p>
+        </div>
+      </div>
+      <div class="server-input-row">
+        <div class="input-wrap">
+          <input type="url" id="targetHostInput" value="https://ichance.vercel.app" placeholder="https://ichance.vercel.app" spellcheck="false">
+        </div>
+        <button type="button" class="btn btn--outline" id="checkServerBtn">
+          <span>🔄 فحص الاتصال</span>
+        </button>
+      </div>
+      <div class="server-meta" id="serverMetaBox" hidden>
+        <span class="meta-item">🎮 الألعاب النشطة: <b id="metaGamesCount">-</b></span>
+        <span class="meta-item">⏱️ زمن الاستجابة: <b id="metaPingMs">-</b></span>
+        <span class="meta-item">🔒 حالة الأمان: <b class="text-gold">مشفر ومحمي</b></span>
+      </div>
+    </section>
+
+    <!-- 2. بطاقة توليد المفتاح الرئيسية -->
+    <section class="card generator-card">
+      <div class="card-badge">🔐 نظام أمان فائق</div>
+      <div class="gen-hero">
+        <div class="lock-glow-icon">👑</div>
+        <h2>توليد مفتاح إدارة جديد</h2>
+        <p>
+          توليد مفتاح إدارة جديد فوري ومصادق عليه بنقرة واحدة، يتيح لك فتح وإدارة لوحة التحكم فوراً وإلغاء أي مفتاح قديم للأمان.
+        </p>
+      </div>
+
+      <div class="gate-token-field">
+        <label for="gateTokenInput">رمز البوابة السرية (Gate Token):</label>
+        <div class="input-with-copy">
+          <input type="text" id="gateTokenInput" value="6a546f34f797ed19196b0d9392ae8979" spellcheck="false">
+          <button type="button" class="btn-sm-copy" id="copyGateBtn" title="نسخ رمز البوابة">📋</button>
+        </div>
+        <span class="field-hint">رمز الأمان السري الدائم المصرح به لمالك المنصة</span>
+      </div>
+
+      <div class="action-wrap">
+        <button type="button" class="btn btn--gold-glow btn--lg" id="generateKeyBtn">
+          <span class="btn-icon">⚡</span>
+          <span>توليد مفتاح الإدارة الآن</span>
+        </button>
+      </div>
+
+      <!-- منطقة إخراج المفتاح المولّد -->
+      <div class="key-result-box" id="keyResultBox" hidden>
+        <div class="res-head">
+          <span class="res-icon">✅</span>
+          <span class="res-title">تم توليد مفتاح إدارة معتمد بنجاح!</span>
+        </div>
+        <div class="key-display">
+          <code id="generatedKeyVal">----------------------------------</code>
+          <button type="button" class="btn btn--copy-key" id="copyGeneratedKeyBtn">
+            <span id="copyKeyIcon">📋</span>
+            <span id="copyKeyText">نسخ المفتاح</span>
+          </button>
+        </div>
+        <div class="key-actions">
+          <button type="button" class="btn btn--neon-launch" id="launchAdminBtn">
+            <span>🚀 دخول مباشر إلى لوحة الإدارة</span>
+            <span class="arrow">←</span>
+          </button>
+        </div>
+        <div class="key-expiry-note">
+          💡 <b>ملاحظة:</b> تم حفظ المفتاح محلياً على متصفحك. يمكنك استخدامه للدخول في أي وقت.
+        </div>
+      </div>
+
+      <!-- صندوق الخطأ -->
+      <div class="error-box" id="errorBox" hidden></div>
+    </section>
+
+    <!-- 3. روابط الوصول السريع والأدوات -->
+    <section class="card quick-links-card">
+      <h3>⚡ روابط الوصول السريع لمنصة iCHANCE</h3>
+      <div class="links-grid">
+        <a href="https://ichance.vercel.app/admin" target="_blank" class="quick-link-item" id="linkAdmin">
+          <div class="link-icon">⚙️</div>
+          <div class="link-info">
+            <b>لوحة إدارة المنصة (Admin Panel)</b>
+            <span>التحكم بالألعاب، نسب العائد، والكاشيرية</span>
+          </div>
+          <div class="link-arrow">↗</div>
+        </a>
+
+        <a href="https://ichance.vercel.app/cashier" target="_blank" class="quick-link-item" id="linkCashier">
+          <div class="link-icon">💼</div>
+          <div class="link-info">
+            <b>لوحة الكاشير المالي (Cashier Portal)</b>
+            <span>إدارة شحن وسحب أرصدة اللاعبين</span>
+          </div>
+          <div class="link-arrow">↗</div>
+        </a>
+
+        <a href="https://ichance.vercel.app/" target="_blank" class="quick-link-item" id="linkMainSite">
+          <div class="link-icon">🎰</div>
+          <div class="link-info">
+            <b>موقع الألعاب المباشر (Main Casino)</b>
+            <span>الواجهة العامة للاعبين والزوار</span>
+          </div>
+          <div class="link-arrow">↗</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 4. تدوير رمز البوابة في حالات الطوارئ -->
+    <section class="card rotate-card">
+      <div class="rotate-inner">
+        <div>
+          <h4>🔄 تدوير رمز البوابة السرية (Rotate Gate Token)</h4>
+          <p>في حال تسرب رمز البوابة أو الرغبة بتجديد الحماية، يمكنك توليد رمز بوابة جديد بالكامل.</p>
+        </div>
+        <button type="button" class="btn btn--danger-outline" id="rotateGateBtn">
+          <span>تغيير رمز البوابة</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>iCHANCE Security Portal & Key Generator © 2026 — Master Access Only</div>
+  </footer>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
