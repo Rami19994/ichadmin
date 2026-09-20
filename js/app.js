@@ -2,7 +2,9 @@
 
 // ── إعدادات وبيانات الحالة ──
 let TARGET_HOST = localStorage.getItem('ichadmin.targetHost') || 'https://ichance.vercel.app';
-let GATE_TOKEN = localStorage.getItem('ichadmin.gateToken') || '6a546f34f797ed19196b0d9392ae8979';
+// يُحفظ في متصفح المالك وحده. أي قيمة افتراضية هنا تُنشر مع المستودع
+// وتصير مفتاحاً عامّاً للوحة الإدارة.
+let GATE_TOKEN = localStorage.getItem('ichadmin.gateToken') || '';
 let CURRENT_GENERATED_KEY = '';
 
 const el = (id) => document.getElementById(id);

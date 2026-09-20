@@ -16,7 +16,16 @@ module.exports = async (req, res) => {
   const targetHost = req.query.host || process.env.TARGET_HOST || 'ichance.vercel.app';
   const targetProtocol = targetHost.startsWith('localhost') ? 'http:' : 'https:';
   const targetPath = req.query.path === 'path' ? '/api/admin/gate/path' : '/api/admin/gate';
-  const gateToken = req.headers['x-gate'] || req.query.gate || '6a546f34f797ed19196b0d9392ae8979';
+  // ⚠ لا قيمة احتياطية مكتوبة هنا أبداً. كتابة المسار السرّي في الكود
+  // تنشره لكل من يقرأ المستودع، ومن يقرأه يفتح لوحة الإدارة.
+  // يصل من ترويسة الطلب، أو من متغيّر بيئة يُضبط في لوحة الاستضافة.
+  const gateToken = req.headers['x-gate'] || req.query.gate || process.env.GATE_TOKEN || '';
+  if (!gateToken) {
+    res.statusCode = 400;
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.end(JSON.stringify({ error: 'رمز البوابة مفقود — أدخله في الصفحة أو اضبط GATE_TOKEN' }));
+    return;
+  }
 
   try {
     const targetUrl = new URL(targetPath, `${targetProtocol}//${targetHost}`);
